@@ -1,23 +1,27 @@
 <html>
-<head>
-<script>
-var date = new Date();
-var year = date.getFullYear();
-var month = date.getMonth()+1;
-var day = date.getDate();
-if (date.getUTCHours() < 6) {
-  // paper is not ready yet, use yesterdays paper
-  day--;
-  if (day < 1) {
-     month--;
-     if (month < 0) {
-       month = 12;
-       year--;
-     }
-     day = {1:31,2:28,3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31}[month];
-  }
-}
-window.location = 'https://static01.nyt.com/images/'+year+'/'+(month<10?'0':'')+month+'/'+(day<10?'0':'')+day+'/nytfrontpage/scan.pdf';
-</script>
-</head>
+  <head>
+    <link
+      rel="icon"
+      href="https://static01.nyt.com/favicon.ico"
+      type="image/x-icon"
+    />
+    <script>
+      const date = new Date();
+
+      if (date.getUTCHours() < 6) {
+        // paper is not ready yet, use yesterdays paper
+        date.setUTCDate(date.getUTCDate() - 1);
+      }
+
+      function format(num) {
+        return num.toString().padStart(2, "0");
+      }
+
+      const year = format(date.getUTCFullYear());
+      const month = format(date.getUTCMonth() + 1);
+      const day = format(date.getUTCDate());
+
+      window.location = `https://static01.nyt.com/images/${year}/${month}/${day}/nytfrontpage/scan.pdf`;
+    </script>
+  </head>
 </html>
